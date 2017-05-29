@@ -16,6 +16,7 @@ namespace BethanysPieShop
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,8 +26,12 @@ namespace BethanysPieShop
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage(); // get useful error messaging during development
             }
+
+            app.UseStatusCodePages(); // adds support for text only headers for common status codes
+            app.UseStaticFiles(); // adds support for ability to have site serve static files
+            app.UseMvcWithDefaultRoute(); // sets up  MVC middleware using default routing schema
 
             app.Run(async (context) =>
             {
